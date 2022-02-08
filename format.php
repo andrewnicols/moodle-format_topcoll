@@ -59,8 +59,9 @@ if ($week = optional_param('week', 0, PARAM_INT)) { // Weeks old section paramet
 $context = context_course::instance($course->id);
 
 // Retrieve course format option fields and add them to the $course object.
-$courseformat = course_get_format($course);
-$course = $courseformat->get_course();
+$format = course_get_format($course);
+$course = $format->get_course();
+$options = (object) $format->get_format_options();
 
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context) && confirm_sesskey()) {
     $course->marker = $marker;
@@ -68,12 +69,12 @@ if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $context
 }
 
 // Make sure all sections are created.
-course_create_sections_if_missing($course, range(0, $course->numsections));
+course_create_sections_if_missing($course, range(0, $options->numsections));
 
 $renderer = $PAGE->get_renderer('format_topcoll');
 
 if (!empty($displaysection)) {
-    $courseformat->set_section_number($displaysection);
+    $format->set_section_number($displaysection);
     $renderer->single_section_page($course, $displaysection);
 } else {
     $defaulttogglepersistence = clean_param(get_config('format_topcoll', 'defaulttogglepersistence'), PARAM_INT);
@@ -89,7 +90,9 @@ if (!empty($displaysection)) {
 
     $renderer->set_user_preference($userpreference, $defaultuserpreference, $defaulttogglepersistence);
 
-    $renderer->multiple_section_page($course);
+    $outputclass = $format->get_output_classname('content');
+    $widget = new $outputclass($format);
+    echo $renderer->render($widget);
 }
 
 // Include course format js module.

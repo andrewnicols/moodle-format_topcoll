@@ -1,0 +1,27 @@
+{{!
+
+This is an example template to override individual child templates in a course module (activity).
+
+All overridable templates are listed in this file.
+
+If you are overriding this template, or any of the children listed here, then you must also:
+* create and configure the format_[yourplugin]\output\local\content\section\cmitem class;
+* override the content/section template; and
+* create and configure the format_[yourplugin]\output\local\content\section class;
+* override the content template; and
+* create and configure the format_[yourplugin]\output\local\content class.
+
+}}
+
+{{!
+  Include the core content/section/cmitem template.
+  This is the template used to render a single activity.
+}}
+
+{{< core_courseformat/local/content/section/cmitem }}
+
+    {{$ core_courseformat/local/content/cm}}
+        {{> format_topcoll/local/content/cm }}
+    {{/ core_courseformat/local/content/cm}}
+
+{{/ core_courseformat/local/content/section/cmitem }}

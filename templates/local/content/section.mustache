@@ -1,0 +1,18 @@
+{{!
+  Include the core content/section template.
+  This is the template used to render a single section.
+}}
+{{< core_courseformat/local/content/section }}
+
+    {{!
+        The representation of a single course module (activity).
+        Source: core_courseformat/local/content/section/cmitem
+
+        Note: This is a child template of the CM List.
+        Note: See notes at the top of this file for instructions on how to override the cmitem template.
+    }}
+    {{$ core_courseformat/local/content/section/cmitem }}
+        {{> format_topcoll/local/content/section/cmitem }}
+    {{/ core_courseformat/local/content/section/cmitem }}
+
+{{/ core_courseformat/local/content/section }}

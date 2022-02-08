@@ -296,21 +296,6 @@ class format_topcoll extends core_courseformat\base {
     }
 
     /**
-     * Returns the information about the ajax support in the given source format
-     *
-     * The returned object's property (boolean)capable indicates that
-     * the course format supports Moodle course ajax features.
-     * The property (array)testedbrowsers can be used as a parameter for {@link ajaxenabled()}.
-     *
-     * @return stdClass
-     */
-    public function supports_ajax() {
-        $ajaxsupport = new stdClass();
-        $ajaxsupport->capable = true;
-        return $ajaxsupport;
-    }
-
-    /**
      * Custom action after section has been moved in AJAX mode
      *
      * Used in course/rest.php
@@ -459,10 +444,6 @@ class format_topcoll extends core_courseformat\base {
                     WHERE course = ?', array($courseid));
             }
             $courseformatoptions = array(
-                'numsections' => array(
-                    'default' => $defaultnumsections,
-                    'type' => PARAM_INT
-                ),
                 'hiddensections' => array(
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT
@@ -608,11 +589,6 @@ class format_topcoll extends core_courseformat\base {
                 )
             );
             $courseformatoptionsedit = array(
-                'numsections' => array(
-                    'label' => new lang_string('numbersections', 'format_topcoll'),
-                    'element_type' => 'select',
-                    'element_attributes' => array($sectionmenu),
-                ),
                 'hiddensections' => array(
                     'label' => new lang_string('hiddensections'),
                     'help' => 'hiddensections',
@@ -1708,6 +1684,13 @@ class format_topcoll extends core_courseformat\base {
      * @return bool
      */
     public function supports_news() {
+        return true;
+    }
+
+    /**
+     * This format is compatible with the React updates.
+     */
+    public function supports_components() {
         return true;
     }
 

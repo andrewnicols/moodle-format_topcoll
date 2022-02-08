@@ -36,6 +36,14 @@ class section extends \core_courseformat\output\local\content\section {
 
         unset($data->collapsemenu);
 
+
+        if (!$this->format->get_section_number()) {
+            $addsectionclass = $this->format->get_output_classname('content\\addsection');
+            $addsection = new $addsectionclass($this->format);
+            $data->numsections = $addsection->export_for_template($output);
+            $data->insertafter = true;
+        }
+
         return $data;
     }
 }

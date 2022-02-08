@@ -16,6 +16,8 @@
 
 namespace format_topcoll\output\courseformat\content;
 
+use stdClass;
+
 /**
  * Contains the section controls output class.
  *
@@ -29,4 +31,11 @@ class section extends \core_courseformat\output\local\content\section {
         return 'format_topcoll/local/content/section';
     }
 
+    public function export_for_template(\renderer_base $output): stdClass {
+        $data = parent::export_for_template($output);
+
+        unset($data->collapsemenu);
+
+        return $data;
+    }
 }
